@@ -93,6 +93,7 @@ celerybeat-schedule
 
 # virtualenv
 venv/
+scribe_env/
 ENV/
 
 # Spyder project settings
@@ -196,3 +197,11 @@ fabric.properties
 
 # vscode folder, uncomment if you don't need it
 .vscode
+
+
+# extension specific
+out
+dist
+node_modules
+.vscode-test/
+*.vsix
