@@ -2,14 +2,13 @@ import os
 
 from dotenv import load_dotenv
 from pydantic import ConfigDict
-from base64 import b64decode as b64d
 from pydantic_settings import BaseSettings
 
 load_dotenv()
 
 
 class CommonSettings(BaseSettings):
-    app_name: str = "CodeScribe"
+    app_name: str = "Scribe"
     app_version: str = "0.0.1"
     extension_version: str = "0.0.1"
     organization_name: str = "SNED"
