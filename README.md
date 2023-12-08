@@ -1,16 +1,19 @@
 This repo is our submission for QCRI Generative AI Hackathon 2023 ([website](https://genai23.qcri.org))
 
 
-Write Project Name
+Scribe
 ====
 
-Write Team Name:
+SNED
 ==
-First Member (first_member@email.com)
-Second Memeber (second_member@email.com)
 
-Description
+Zan Naeem (zanzilla1995@email.com)
+Abdullah Khan (abdullahkn287@email.com)
+Sameer Ahmad (sameer.javed.ah@email.com)
+
+Visual Studio Code Extension for Automatic Code Documentation. Leverages GPT and LLMs to create verbose explanations of code, generate code documentation pdfs, create in editor annotations, definitions, revisions and finally analyze code compexity for code chunks.
 ==
+
 This project is a template for submission to QCRI Generative AI Hackathon 2023. It does:
 1. submission should fork this project and update the README
 2. code and data should be contained in this repo
