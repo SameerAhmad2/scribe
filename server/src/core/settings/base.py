@@ -15,8 +15,13 @@ class CommonSettings(BaseSettings):
     organization_name: str = "SNED"
     app_environment: str = os.getenv("ENVIRONMENT", None)
 
-    openai_organization: str = os.getenv("OPENAI_ORGANIZATION_ID", None)
     openai_api_secret_key: str = os.getenv("OPENAI_SECRET_KEY", None)
+    openai_organization: str = os.getenv("OPENAI_ORGANIZATION_ID", None)
+
+    azure_openai_api_key: str = os.getenv("AZURE_OPENAI_API_KEY")
+    azure_openai_endpoint: str = os.getenv("AZURE_OPENAI_ENDPOINT")
+    openai_api_version: str = os.getenv("OPENAI_API_VERSION")
+    azure_model_name: str = os.getenv("MODEL_NAME")
 
     accepted_versions: list[str] = ["v1"]
     deprecated_versions: list[str] = []

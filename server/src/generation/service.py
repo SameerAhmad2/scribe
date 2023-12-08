@@ -1,5 +1,6 @@
 import openai
 
+
 from src.core.utils import timeit
 from src.core.settings import AppSettings
 from src.generation.schemas import (
@@ -25,8 +26,6 @@ from .constants import (
 
 
 settings = AppSettings()
-openai.api_key = settings.openai_api_secret_key
-openai.organization = settings.openai_organization
 
 
 class OpenAIChatSession:
@@ -36,14 +35,15 @@ class OpenAIChatSession:
         self,
         command: SystemPrompt,
         language: AcceptedCodeLanguages,
-        model: GenerativeTransformerModel = GenerativeTransformerModel.Simple,
+        model: GenerativeTransformerModel,
     ):
         self.model = model
         self.command = command
         self.language = language
-        self.session = openai.OpenAI(
-            api_key=settings.openai_api_secret_key,
-            organization=settings.openai_organization,
+        self.session = openai.AzureOpenAI(
+            api_key=settings.azure_openai_api_key,
+            azure_endpoint=settings.azure_openai_endpoint,
+            api_version=settings.openai_api_version,
         )
 
     @classmethod

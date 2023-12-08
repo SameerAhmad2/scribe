@@ -33,7 +33,7 @@ generation_router = APIRouter(
 async def annotate_code_snippet(metadata: AnnotateSchemaIn):
     chat_session = OpenAIChatSession(
         language=metadata.code_extension,
-        model=GenerativeTransformerModel.Complex,
+        model=GenerativeTransformerModel.Azure,
         command=SystemPrompt.Annotate,
     )
     successful_annotation, annotated_output = chat_session.annotate_code_block(
@@ -50,7 +50,7 @@ async def annotate_code_snippet(metadata: AnnotateSchemaIn):
 async def explain_code_snippet(metadata: ExplainSchemaIn):
     chat_session = OpenAIChatSession(
         language=metadata.code_extension,
-        model=GenerativeTransformerModel.Complex,
+        model=GenerativeTransformerModel.Azure,
         command=SystemPrompt.Explain,
     )
     explained_output = chat_session.explain_code_block(
@@ -68,7 +68,7 @@ async def explain_code_snippet(metadata: ExplainSchemaIn):
 async def analyse_code_snippet(metadata: AnalyseSchemaIn):
     chat_session = OpenAIChatSession(
         language=metadata.code_extension,
-        model=GenerativeTransformerModel.Complex,
+        model=GenerativeTransformerModel.Azure,
         command=SystemPrompt.Analyse,
     )
     analysed_output, complexity_dict = chat_session.analyse_code_block(
@@ -84,7 +84,7 @@ async def revise_code_snippet(
 ):
     chat_session = OpenAIChatSession(
         language=metadata.code_extension,
-        model=GenerativeTransformerModel.Complex,
+        model=GenerativeTransformerModel.Azure,
         command=SystemPrompt.Revise,
     )
     successful_revision, revised_output = chat_session.revise_code_block(
@@ -101,7 +101,7 @@ async def revise_code_snippet(
 async def define_code_snippet(metadata: DefineSchemaIn):
     chat_session = OpenAIChatSession(
         language=metadata.code_extension,
-        model=GenerativeTransformerModel.Complex,
+        model=GenerativeTransformerModel.Azure,
         command=SystemPrompt.Define,
     )
     successful_definition, defined_output = chat_session.define_code_block(
