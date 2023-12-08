@@ -17,6 +17,7 @@ class GenerativeTransformerModel(Enum):
     Complex = "gpt-4"
     Simple = "gpt-3.5-turbo"
     Intermediate = "gpt-3.5-turbo-16k"
+    Azure = "gpt-model-01"
 
 
 class AcceptedCodeLanguages(Enum):
