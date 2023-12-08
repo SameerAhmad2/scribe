@@ -1,5 +1,5 @@
-import { CodeScribeWebViewPanel } from "./webview";
+import { ScribeWebViewPanel } from "./webview";
 import { SidebarProvider } from "./sidebar";
 
 
-export { CodeScribeWebViewPanel, SidebarProvider }
+export { ScribeWebViewPanel, SidebarProvider }

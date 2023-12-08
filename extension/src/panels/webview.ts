@@ -11,13 +11,13 @@ import { handleMessageFromWebview, getWebviewContent } from "./common";
  * - Setting the HTML (and by proxy CSS/JavaScript) content of the webview panel
  * - Setting message listeners so data can be passed between the webview and extension
  */
-export class CodeScribeWebViewPanel {
-  public static currentPanel: CodeScribeWebViewPanel | undefined;
+export class ScribeWebViewPanel {
+  public static currentPanel: ScribeWebViewPanel | undefined;
   private readonly _panel: WebviewPanel;
   private _disposables: Disposable[] = [];
 
   /**
-   * The CodeScribeWebViewPanel class private constructor (called only from the render method).
+   * The ScribeWebViewPanel class private constructor (called only from the render method).
    *
    * @param panel A reference to the webview panel
    * @param extensionUri The URI of the directory containing the extension
@@ -43,16 +43,16 @@ export class CodeScribeWebViewPanel {
    * @param extensionUri The URI of the directory containing the extension.
    */
   public static render(extensionUri: Uri) {
-    if (CodeScribeWebViewPanel.currentPanel) {
+    if (ScribeWebViewPanel.currentPanel) {
       // If the webview panel already exists reveal it
-      CodeScribeWebViewPanel.currentPanel._panel.reveal(ViewColumn.Two);
+      ScribeWebViewPanel.currentPanel._panel.reveal(ViewColumn.Two);
     } else {
       // If a webview panel does not already exist create and show a new one
       const panel = window.createWebviewPanel(
         // Panel view type
-        "codeScribeUI",
+        "ScribeUI",
         // Panel title
-        "CodeScribe - Auto Documentation Generator",
+        "Scribe - Auto Documentation Generator",
         // The editor column the panel should be displayed in
         ViewColumn.Two,
         // Extra panel configurations
@@ -69,7 +69,7 @@ export class CodeScribeWebViewPanel {
         }
       );
 
-      CodeScribeWebViewPanel.currentPanel = new CodeScribeWebViewPanel(panel, extensionUri);
+      ScribeWebViewPanel.currentPanel = new ScribeWebViewPanel(panel, extensionUri);
     }
   }
 
@@ -77,7 +77,7 @@ export class CodeScribeWebViewPanel {
    * Cleans up and disposes of webview resources when the webview panel is closed.
    */
   public dispose() {
-    CodeScribeWebViewPanel.currentPanel = undefined;
+    ScribeWebViewPanel.currentPanel = undefined;
 
     // Dispose of the current webview panel
     this._panel.dispose();

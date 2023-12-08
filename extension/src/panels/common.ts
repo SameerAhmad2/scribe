@@ -68,7 +68,7 @@ export const getWebviewContent = (webview: Webview, extensionUri: Uri) => {
         "build",
         "static",
         "css",
-        "main.css",
+        "main.f855e6bc.css",
     ]);
     // The JS file from the React build output
     const scriptUri = getUri(webview, extensionUri, [
@@ -76,7 +76,7 @@ export const getWebviewContent = (webview: Webview, extensionUri: Uri) => {
         "build",
         "static",
         "js",
-        "main.js",
+        "main.811c2c08.js",
     ]);
 
     const nonce = getNonce();
@@ -90,7 +90,7 @@ export const getWebviewContent = (webview: Webview, extensionUri: Uri) => {
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
             <meta name="theme-color" content="#000000">
             <link rel="stylesheet" type="text/css" href="${stylesUri}">
-            <title>CodeScribe</title>
+            <title>Scribe</title>
           </head>
           <body>
             <noscript>You need to enable JavaScript to run this app.</noscript>

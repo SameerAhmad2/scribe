@@ -4,7 +4,7 @@
   "description": "Auto Code Documentation Generation using GPT4",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.85.0"
+    "vscode": "^1.75.0"
   },
   "categories": [
     "Other"
@@ -12,14 +12,47 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "qcri-scribe-ai-sidebar-view",
+          "title": "Scribe",
+          "icon": "$(notebook)"
+        }
+      ]
+    },
+    "views": {
+      "qcri-scribe-ai-sidebar-view": [
+        {
+          "type": "webview",
+          "id": "scribe-view",
+          "name": "Scribe",
+          "icon": "$(notebook)",
+          "contextualTitle": "Scribe"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "qcri-scribe-ai.helloWorld",
-        "title": "Hello World"
+        "title": "Launch Scribe AI"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "qcri-scribe-ai.generateDoc",
+        "key": "ctrl+f1",
+        "mac": "cmd+f1",
+        "when": "editorTextFocus"
       }
     ]
   },
   "scripts": {
+    "install:all": "npm install && cd webview-ui && npm install",
+    "start:webview": "cd webview-ui && npm run start",
+    "build:webview": "cd webview-ui && npm run build",
+    "start:ext": "npm run build:webview && open -a Visual\\ Studio\\ Code\\ 2 && cliclick kd:fn kp:f5",
+    "test:webview": "cd webview-ui && npm run test",
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
