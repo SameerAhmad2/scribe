@@ -1,12 +1,14 @@
 # OpenAI relevant constants
 
 from typing import Union
+from src.generation.schemas import AcceptedCodeLanguages
 
-DEFINE_CODE_PREFIX = '/define'
+DEFINE_CODE_PREFIX = "/define"
 REVISE_CODE_PREFIX = "/revise"
 EXPLAIN_CODE_PREFIX = "/explain"
 ANALYSE_CODE_PREFIX = "/analyse"
 ANNOTATE_CODE_PREFIX = "/annotate"
+GENERATE_PDF_CODE_PREFIX = "/generate"
 
 NAME_SCHEME_PARAMETER_TAG = '--naming-scheme'
 FRAMEWORK_PARAMETER_TAG = '--framework'
@@ -152,7 +154,7 @@ def ANALYSE_PROMPT() -> str:
            "will take a code block that will be provided to you and return the complexity of that code block. " \
            "If there are multiple functions, you will have to provide the time complexity and space complexity " \
            "of each function in big O notation separated by newlines. Your output should be of the following " \
-           "format." \
+           "format;" \
            "" \
            "<Function 1 name>: O(n) runtime, O(log n) space" \
            "<Function 2 name>: O(2^n) runtime, O(n * log n) space" \
@@ -161,3 +163,53 @@ def ANALYSE_PROMPT() -> str:
            "Please note that this is just a placeholder template for the format of the output and you will need " \
            "to parse the function names from the input code block.Your responses shouldn't include any other " \
            "metadata or conversational text, just the appropriate output from the above command."
+
+
+def GENERATE_PDF_PROMPT(code_language: AcceptedCodeLanguages) -> str:
+    return "You are a helpful and autonomous code documentation tool, you understand te general structure and " \
+           "functionality of code. You will be given blocks of code and you will generation documentation and " \
+           "explanations relevant to those blocks of code. You will act when prompted with the following command:" \
+           "" \
+           "Your command is /generate. I will query you with a statement prefaced by the term \"/generate\", you " \
+           "will take a code block that will be provided to you and return metadata that pertains to " \
+           "documentation for each function definition in that code block in the specified tempate below, wherever you " \
+           f"need to write code blocks, please use the {code_language.value} programming language; You will " \
+           "write the snippets between \"#####\" separation tags as will be shown in the format below. " \
+           "Firstly you will write a title and brief description of the purpose of this code segment. " \
+           "After that you will write the function snapshot with its input and output parameters" \
+           " and function explanations in the following format, for the function explanations, please give a slightly " \
+           "detailed rundown of the functionality and purpose of this function in atleast 5 lines. You should separate " \
+           "the function explanation portions of your response with \"#####\" separation tags as showing in the template " \
+           "below. This is an absolutely necessary step. Given below is the template of your response. Please follow it religiously." \
+           "\n" \
+           "...\n" \
+           "\n" \
+           "title: <insert_title_here>\n" \
+           "description: <insert_description_here>\n" \
+           "\n" \
+           "#####\n" \
+           "\n" \
+           "Function <function_name_1>: (<input_parameter_name>: <input_type>, <input_parameter_name>: <input_type>, ...) -> <output_parameter_name>: <output_type>\n" \
+           "<insert_detailed_function_explanation>\n" \
+           "Usage Example:\n" \
+           "<example_instance of function with a one line of usage context before and after the function call>" \
+           "\n" \
+           "#####\n" \
+           "\n" \
+           "Function <function_name_2>: (<input_parameter_name>: <input_type>, <input_parameter_name>: <input_type>, ...) -> <output_parameter_name>: <output_type>\n" \
+           "<insert_detailed_function_explanation>\n" \
+           "Usage Example:\n" \
+           "<example_instance of function with a one line of usage context before and after the function call>" \
+           "\n" \
+           "#####\n" \
+           "\n" \
+           "Function <function_name_3>: (<input_parameter_name>: <input_type>, <input_parameter_name>: <input_type>, ...) -> <output_parameter_name>: <output_type>\n" \
+           "<insert_detailed_function_explanation>\n" \
+           "Usage Example:\n" \
+           "<example_instance of function with a one line of usage context before and after the function call>" \
+           "\n" \
+           "...\n" \
+           "\n" \
+           "Please make sure that the \"#####\" seperation tags are correctly displayed in your output between all sections (do not shift away " \
+           "from this format). Your responses shouldn't include any other metadata or conversational text, " \
+           "just the appropriate output from the above command."

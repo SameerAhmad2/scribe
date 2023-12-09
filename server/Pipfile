@@ -11,6 +11,7 @@ pydantic = "*"
 typing = "*"
 pydantic-settings = "*"
 python-dotenv = "*"
+python-multipart = "*"
 
 [dev-packages]
 

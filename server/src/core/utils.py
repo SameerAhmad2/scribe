@@ -19,10 +19,10 @@ def timeit(func: Any):
     return compute_execution_time
 
 
-def generate_alphanumeric_id(length=10, case_sensitive=False):
+def generate_alphanumeric_id(length=10, case_sensitive=False, upper_only=False, lower_only=False):
     sample_space = (
         string.digits
-        + string.ascii_uppercase
-        + (string.ascii_lowercase if not case_sensitive else "")
+        + (string.ascii_uppercase if not lower_only else "")
+        + (string.ascii_lowercase if not upper_only or not case_sensitive else "")
     )
     return "".join([random.choice(sample_space) for _ in range(length)])

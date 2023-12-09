@@ -3,6 +3,8 @@ from enum import Enum
 from typing import Literal, Union
 from src.core.schemas import PrivateBaseModel
 
+from fastapi import Form
+from typing import Annotated
 from pydantic import FieldValidationInfo, field_validator
 
 
@@ -12,6 +14,7 @@ class SystemPrompt(Enum):
     Analyse = '/analyse'
     Explain = '/explain'
     Annotate = '/annotate'
+    Generate = '/generate'
 
 
 class GenerativeTransformerModel(Enum):
@@ -49,6 +52,11 @@ class AcceptedNaturalLanguages(Enum):
 class BaseGenerationSchema(PrivateBaseModel):
     language_model: Literal['openai']
     code_block_to_generate_from: str
+    code_extension: AcceptedCodeLanguages
+
+
+class BaseGenerationPDFSchema(PrivateBaseModel):
+    language_model: Literal['openai']
     code_extension: AcceptedCodeLanguages
 
 
@@ -145,3 +153,32 @@ class AnnotateSchemaOut(PrivateBaseModel):
 class ExplainSchemaOut(PrivateBaseModel):
     explanation_complexity: int
     explained_output: str
+
+
+class FunctionExplanationSchema(PrivateBaseModel):
+    name: str
+    description: str
+    function_descriptor: str
+
+    # Code blocks that show example usage
+    usage_example: str
+
+
+class GeneratePDFSchemaOut(PrivateBaseModel):
+    id: str
+    title: str
+    footnotes: list[str]
+    description: Union[str, None]
+    function_explanations: list[FunctionExplanationSchema]
+
+
+class GeneratePDFSchemaIn(BaseGenerationPDFSchema):
+
+    @classmethod
+    def as_form(cls,
+                language_model: Annotated[Literal['openai'], Form()],
+                code_extension: Annotated[AcceptedCodeLanguages, Form()]) -> 'GeneratePDFSchemaIn':
+
+        return cls(language_model=language_model,
+                   code_extension=code_extension)
+    pass

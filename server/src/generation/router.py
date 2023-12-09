@@ -1,9 +1,11 @@
-from fastapi import APIRouter
+from base64 import decode
+from fastapi import APIRouter, Depends, File
 
+from typing import Annotated
 
 from src.generation.service import OpenAIChatSession
-from src.generation.schemas import ExplainSchemaIn, ExplainSchemaOut, \
-    ReviseSchemaIn, ReviseSchemaOut, DefineSchemaIn, DefineSchemaOut, AnnotateSchemaIn, \
+from src.generation.schemas import ExplainSchemaIn, ExplainSchemaOut, GeneratePDFSchemaIn, \
+    ReviseSchemaIn, ReviseSchemaOut, DefineSchemaIn, DefineSchemaOut, AnnotateSchemaIn, GeneratePDFSchemaOut, \
     AnnotateSchemaOut, AnalyseSchemaIn, AnalyseSchemaOut, GenerativeTransformerModel, SystemPrompt
 
 
@@ -101,3 +103,13 @@ async def define_code_snippet(metadata: DefineSchemaIn):
         "defined_output": defined_output,
         "successful_definition": successful_definition
     }
+
+
+@generation_router.post('/create-pdf/', response_model=GeneratePDFSchemaOut)
+async def define_code_snippet(code_file_to_generate_from: Annotated[bytes, File()], metadata: GeneratePDFSchemaIn = Depends(GeneratePDFSchemaIn.as_form)):
+    chat_session = OpenAIChatSession(
+        language=metadata.code_extension,
+        model=GenerativeTransformerModel.Azure,
+        command=SystemPrompt.Generate,
+    )
+    return chat_session.generate_pdf_metadata(code_file_to_generate_from.decode())

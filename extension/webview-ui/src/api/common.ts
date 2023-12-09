@@ -1,13 +1,11 @@
 export interface IBaseAPI {
     hostname: string;
-    api_version: string;
 }
 
 
 class APIInteractor implements IBaseAPI {
     uri: string;
     hostname: string;
-    api_version: string;
 
     // Private urls
     private response?: Response;
@@ -15,7 +13,6 @@ class APIInteractor implements IBaseAPI {
 
     constructor(uri: string, authenticated = false) {
         this.uri = uri;
-        this.api_version = 'v1';
         this.authenticated = authenticated;
         this.hostname = 'http://127.0.0.1:8000';
 
@@ -26,7 +23,7 @@ class APIInteractor implements IBaseAPI {
     }
 
     generate_endpoint_url = () => {
-        return `${this.hostname}/${this.api_version}/${this.uri}`
+        return `${this.hostname}/${this.uri}`
     }
 
     compile_headers = (): Headers => {

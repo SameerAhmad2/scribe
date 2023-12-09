@@ -4,9 +4,8 @@ from functools import wraps
 from fastapi import HTTPException
 from collections.abc import Callable
 
-from openai.error import APIError, APIConnectionError, ServiceUnavailableError, \
-    RateLimitError, InvalidRequestError, AuthenticationError, PermissionError, \
-    OpenAIError, SignatureVerificationError
+from openai import APIError, APIConnectionError, \
+    RateLimitError, AuthenticationError, OpenAIError
 
 
 def openai_error_handler(func: Callable[..., Any]):
@@ -28,7 +27,7 @@ def openai_error_handler(func: Callable[..., Any]):
             raise HTTPException(
                 status_code=503, detail="Service is temporarily unavailable... Please try again later!")
 
-        except (APIConnectionError, SignatureVerificationError) as e:
+        except (APIConnectionError) as e:
             # Handle connection error here
             print(f"Failed to connect or verify signature to OpenAI API: {e}")
             raise HTTPException(
@@ -37,18 +36,6 @@ def openai_error_handler(func: Callable[..., Any]):
         except RateLimitError as e:
             # Handle rate limit error (we recommend using exponential backoff)
             print(f"OpenAI API request exceeded rate limit: {e}")
-            raise HTTPException(
-                status_code=503, detail="Service is temporarily unavailable... Please try again later!")
-
-        except ServiceUnavailableError as e:
-            # Handle service unavailable errors
-            print(f"OpenAI API service is temporarily unavailable: {e}")
-            raise HTTPException(
-                status_code=503, detail="Service is temporarily unavailable... Please try again later!")
-
-        except InvalidRequestError as e:
-            # Handle invalid request error (we recommend using exponential backoff)
-            print(f"OpenAI API request is invalid: {e}")
             raise HTTPException(
                 status_code=503, detail="Service is temporarily unavailable... Please try again later!")
 

@@ -14,6 +14,7 @@ export function activate(context: ExtensionContext) {
       ScribeWebViewPanel.render(context.extensionUri);
     })
   );
+
   context.subscriptions.push(
     commands.registerCommand("qcri-scribe-ai.generateDoc", () => {
       window.showInformationMessage("Hello World from Scribe!");
