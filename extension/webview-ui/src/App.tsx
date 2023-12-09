@@ -39,7 +39,7 @@ const themes = {
         primary: {
           main: "#2196f3",
           dark: "#fff",
-          light:"#fff",
+          light: "#fff",
           contrastText: "#000",
         },
       },
@@ -157,7 +157,7 @@ const App = () => {
             aria-label="documentation option tabs"
           >
             <StyledTab label="Doc Options" {...a11yProps(0)} />
-            <StyledTab label="Code Explan" {...a11yProps(1)} />
+            <StyledTab label="Code Explain" {...a11yProps(1)} />
             <StyledTab label="Settings" {...a11yProps(2)} />
           </StyledTabs>
         </Box>
