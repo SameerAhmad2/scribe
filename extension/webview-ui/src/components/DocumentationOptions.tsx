@@ -32,6 +32,7 @@ import {
   fetchAnnotation,
   fetchDefinition,
   fetchRevision,
+  fetchPDFMetaData
 } from "../api/services";
 
 const documentationOptionsMetaData = [
@@ -114,7 +115,7 @@ const Accordion = styled((props: AccordionProps) => (
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
   <MuiAccordionSummary
-    
+
     {...props}
   />
 ))(({ theme }) => ({
@@ -416,8 +417,8 @@ const DocumentationAccordion = ({
 const DocOptions = () => {
   const onGenerateDoc = () => {
     vscode.postMessage({
-      command: "notify",
-      text: "This feature is coming soon... Happy Documenting :) 📕📕📕!",
+      command: "generate_pdf",
+      text: "",
     });
   };
 
@@ -452,6 +453,23 @@ const DocOptions = () => {
       setLoadingForId(option_id, false);
       return { status: false, error_msg };
     }
+  }
+
+  const loadingWrapperPDF = async (fn: Function, args: any[], error_msg: string) => {
+    try {
+      setLoadingPDF(true)
+      const content = await fn(...args)
+      setLoadingPDF(false)
+      return { status: true, content }
+    } catch (error) {
+      setLoadingPDF(false)
+      return { status: false, error_msg }
+    }
+  }
+
+  const getPDFMetadataOutput = async (fileInfo: string, language?: string) => {
+    return await loadingWrapperPDF(fetchPDFMetaData, [fileInfo, language],
+      'Failed to get PDF metadata...\n Please try again!')
   };
 
   const getDefinitionOutput = async (
@@ -516,13 +534,23 @@ const DocOptions = () => {
   }: any) => {
     let result: any;
     switch (command) {
-      case "define":
-        result = await getDefinitionOutput(
-          content,
-          command,
-          language,
-          additional_context
-        );
+      case 'generate_pdf':
+        result = await getPDFMetadataOutput(content, language)
+        if (result.status && result.content.status) {
+          vscode.postMessage({
+            command: 'download',
+            text: JSON.stringify({ content: result.content.content })
+          })
+        } else {
+          vscode.postMessage({
+            command: 'error',
+            text: !result.status ? result.error_msg : result.content.error_msg,
+          })
+        }
+        break;
+
+      case 'define':
+        result = await getDefinitionOutput(content, command, language, additional_context);
         if (result.status && result.content.status) {
           vscode.postMessage({
             command: "update",
@@ -612,7 +640,7 @@ const DocOptions = () => {
       }
       try {
         performOperations(JSON.parse(event.data));
-      } catch (error) {}
+      } catch (error) { }
     };
 
     window.addEventListener("message", handleMessageEvent);

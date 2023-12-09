@@ -58,10 +58,10 @@ class APIInteractor implements IBaseAPI {
         return response
     }
 
-    post = async (post_options: Partial<RequestInit>): Promise<Object | boolean> => {
+    post = async (post_options: Partial<RequestInit>, content_type_header?: string): Promise<Object | boolean> => {
         let response: any = { status: true }
         const headers = this.compile_headers();
-        headers.append('Content-Type', 'application/json')
+        headers.append('Content-Type', content_type_header || 'application/json')
 
         this.response = await fetch(this.generate_endpoint_url(), {
             headers, method: 'POST', ...post_options,

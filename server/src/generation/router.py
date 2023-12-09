@@ -106,10 +106,11 @@ async def define_code_snippet(metadata: DefineSchemaIn):
 
 
 @generation_router.post('/create-pdf/', response_model=GeneratePDFSchemaOut)
-async def define_code_snippet(code_file_to_generate_from: Annotated[bytes, File()], metadata: GeneratePDFSchemaIn = Depends(GeneratePDFSchemaIn.as_form)):
+async def define_code_snippet(metadata: GeneratePDFSchemaIn):
     chat_session = OpenAIChatSession(
         language=metadata.code_extension,
         model=GenerativeTransformerModel.Azure,
         command=SystemPrompt.Generate,
     )
-    return chat_session.generate_pdf_metadata(code_file_to_generate_from.decode())
+
+    return chat_session.generate_pdf_metadata(metadata.code_file_to_generate_from)

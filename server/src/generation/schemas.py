@@ -58,6 +58,7 @@ class BaseGenerationSchema(PrivateBaseModel):
 class BaseGenerationPDFSchema(PrivateBaseModel):
     language_model: Literal['openai']
     code_extension: AcceptedCodeLanguages
+    code_file_to_generate_from: str
 
 
 class DefineSchemaIn(BaseGenerationSchema):
@@ -173,12 +174,4 @@ class GeneratePDFSchemaOut(PrivateBaseModel):
 
 
 class GeneratePDFSchemaIn(BaseGenerationPDFSchema):
-
-    @classmethod
-    def as_form(cls,
-                language_model: Annotated[Literal['openai'], Form()],
-                code_extension: Annotated[AcceptedCodeLanguages, Form()]) -> 'GeneratePDFSchemaIn':
-
-        return cls(language_model=language_model,
-                   code_extension=code_extension)
     pass

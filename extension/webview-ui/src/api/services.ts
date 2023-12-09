@@ -1,6 +1,5 @@
 import APIInteractor from "./common"
 
-
 interface StandardSuccessResponse {
     status: true;
     content: string;
@@ -115,5 +114,22 @@ export const fetchAnalysis = async (inputCode: string, language?: string): Promi
             ? { status: true, complexity: analyseResponse.data.complexity_breakdown }
             : { status: false, error_msg: analyseResponse.error + '\n' + (JSON.stringify(analyseResponse.data) ?? 'NO ADDTIONAL DATA') }
 
+    } catch (e) { return { status: false, error_msg: e as string } }
+}
+
+
+export const fetchPDFMetaData = async (fileInfo: string, language?: string): Promise<StandardReturnType> => {
+    try {
+        const annotateAPI = new APIInteractor('generation/create-pdf/')
+        const annotateResponse: any = await annotateAPI.post({
+            body: JSON.stringify({
+                code_file_to_generate_from: fileInfo,
+                language_model: 'openai',
+                code_extension: language || 'typescript'
+            } as any)
+        })
+        return annotateResponse.status
+            ? { status: true, content: annotateResponse.data }
+            : { status: false, error_msg: annotateResponse.error + '\n' + (JSON.stringify(annotateResponse.data) ?? 'NO ADDTIONAL DATA') }
     } catch (e) { return { status: false, error_msg: e as string } }
 }

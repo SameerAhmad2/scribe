@@ -46,3 +46,7 @@ export const pushChangesToEditor = (content: string, range: vscode.Range): void 
 export const selectLanguageFromEditor = (): string | undefined => {
   return vscode.window.activeTextEditor?.document.languageId;
 }
+
+export const getFilePathFromEditor = (): string | undefined => {
+  return vscode.window.activeTextEditor?.document.uri.fsPath
+}

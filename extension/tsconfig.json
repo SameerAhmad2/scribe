@@ -6,7 +6,9 @@
 		"lib": ["es6", "dom"],
 		"sourceMap": true,
 		"rootDir": "src",
-		"strict": true
+		"strict": true,
+		"resolveJsonModule": true,
+		"esModuleInterop": true
 		},
-		"exclude": ["node_modules", ".vscode-test", "webview-ui"]
+		"exclude": ["node_modules", ".vscode-test", "webview-ui", "pdf_generator"]
 }

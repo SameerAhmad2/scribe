@@ -247,13 +247,9 @@ class OpenAIChatSession:
 
             function_descriptor = lines[0]
             remaining_lines = lines[1:]
-            function_description_lines = []
-            usage_example_lines = []
-            for idx, line in enumerate(remaining_lines):
-                if line != 'Usage Example:':
-                    function_description_lines.append(line)
-                else:
-                    usage_example_lines = remaining_lines[idx+1:]
+            function_description_lines = [remaining_lines[0]]
+            usage_example_lines = list(map(lambda x: x.replace(
+                'Usage Example:', ''), remaining_lines[1:]))
 
             explanation_metadata = dict()
             explanation_metadata['name'] = function_descriptor.split(':')[
@@ -296,6 +292,6 @@ class OpenAIChatSession:
             pdf_metadata_dict = self.parse_pdf_metadata(
                 generated_content=response.choices[0].message.content)
             return self.convert_dict_to_pydantic_model(pdf_metadata_dict)
-        except e:
+        except Exception:
             raise HTTPException(
                 status_code=400, detail='Failed execution of query')

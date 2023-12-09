@@ -3,6 +3,7 @@ import { Position, Range, Uri, Webview, window } from "vscode";
 // IMPORT HELPERS
 import { getUri } from "../utilities/getUri";
 import { getNonce } from "../utilities/getNonce";
+import { generatePdf } from "../pdf_generator"
 import { pushChangesToEditor, selectLanguageFromEditor, selectTextFromEdtior } from "../interface";
 
 
@@ -39,11 +40,20 @@ export const handleMessageFromWebview = ({ message }: {
         // Todo: Command to initialize PDF and MD generation.
         case "generate_md":
         case "generate_pdf":
+            const file_data = selectTextFromEdtior();
+            const code_language = selectLanguageFromEditor()
+            if (!file_data?.content) { window.showErrorMessage("Highlight a code snippet from your editor"); break; }
+            return JSON.stringify({ command, response: file_data, language: code_language, })
+
+        case "download":
+            const { content: pdf_metadata } = JSON.parse(message_data)
+            console.log(pdf_metadata)
+            generatePdf(pdf_metadata)
             break;
 
         // Command to handle VSCode notifications.
         case "notify":
-            window.showInformationMessage(message_data);
+            window.showInformationMessage(JSON.stringify(message_data));
             break;
 
         // Command to handle error messages.
