@@ -126,7 +126,7 @@ class OpenAIChatSession:
                                                             user_content=f'{ANNOTATE_CODE_PREFIX}\n\n{code_block}'))
         response_block = response.choices[0].message.content
         code_matched = self.verify_code_correctness(code_block, response_block)
-        return code_matched, response_block
+        return code_matched, self.remove_gpt_based_comment_blocks_from_code(response_block)
 
     @timeit
     @openai_error_handler

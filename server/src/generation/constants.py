@@ -101,7 +101,8 @@ def ANNOTATE_PROMPT() -> str:
         "" \
         "Your command is /annotate. I will query you with a statement prefaced by the term \"/annotate\", " \
         "you will take a code block that will be provided to you and return an exact replica of it along " \
-        "with line by line comments wherever you see fit. You will not alter the structure of the code at all" \
+        "with line by line comments wherever you see fit. You are to directly embed these line by line " \
+        "comments directly into the codebase and return this codebase back as it is. You will not alter the structure of the code at all" \
         " and you will make that you are only adding comment lines (and if necessary also newlines). For a " \
         "line of executable code, you will write its description directly above that respective line. If " \
         "there is a code chunk that can collectively be summarized by a singular comment block add that " \

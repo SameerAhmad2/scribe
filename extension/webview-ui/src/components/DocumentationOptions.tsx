@@ -422,7 +422,6 @@ const DocOptions = () => {
     });
   };
 
-  const [loadingMD, setLoadingMD] = useState(false);
   const [loadingPDF, setLoadingPDF] = useState(false);
   const [loading, setLoading] = useState(() => {
     const idMap: { [id: string]: boolean } = {};
@@ -691,7 +690,7 @@ const DocOptions = () => {
             that explain your files and modules. This is the quickest way to
             accurately summarize your commits in order for your managers to get
             up to speed with your contributions. You can generate your text
-            documents in PDF or Markdown Format.
+            documents in PDF Format.
           </StyledTypography>
         </Box>
 
@@ -719,7 +718,7 @@ const DocOptions = () => {
         </Box>
 
         <br />
-        <Box
+        {/* <Box
           {...{
             sx: {
               display: "flex",
@@ -739,7 +738,7 @@ const DocOptions = () => {
           >
             Generate MD
           </StyledLoadingButton>
-        </Box>
+        </Box> */}
         <br />
         <br />
       </Box>
