@@ -17,7 +17,9 @@ export const StyledLabel = styled(InputLabel)(({ theme }) => ({
   fontWeight: "bold",
   borderRadius: "4px",
   padding: "2px 10px",
-  backgroundColor: "rgba(0,0,0,0)",
+  // backgroundColor: "rgba(0,0,0,0)",
+  backgroundColor: `${theme.palette.primary.light}`,
+
 
 
   "&.Mui-focused": {

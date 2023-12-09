@@ -39,6 +39,7 @@ const themes = {
         primary: {
           main: "#2196f3",
           dark: "#fff",
+          light:"#fff",
           contrastText: "#000",
         },
       },
@@ -51,6 +52,7 @@ const themes = {
         primary: {
           main: "#66bb6a",
           dark: "#3D3D3D",
+          light: "#000",
           contrastText: "#fff"
         },
       },
