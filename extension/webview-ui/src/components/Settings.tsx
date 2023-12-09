@@ -10,7 +10,6 @@ import {
   Radio,
 } from "@mui/material";
 
-
 //@ts-ignore
 const Settings = ({ selectedTheme, onClickThemeSelection }) => {
   return (
@@ -25,7 +24,10 @@ const Settings = ({ selectedTheme, onClickThemeSelection }) => {
       <Box sx={{ display: "flex", width: "92%" }}>
         <FormControl>
           <FormLabel>Set Theme</FormLabel>
-          <RadioGroup value={selectedTheme} onChange={onClickThemeSelection}>
+          <RadioGroup
+            value={selectedTheme}
+            onChange={(e) => onClickThemeSelection(e.target.value)}
+          >
             <FormControlLabel value="dark" control={<Radio />} label="Dark" />
             <FormControlLabel value="light" control={<Radio />} label="Light" />
           </RadioGroup>

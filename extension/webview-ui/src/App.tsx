@@ -101,7 +101,7 @@ const App = () => {
   }, []);
 
   //@ts-ignore
-  const onChangeTheme = (key: string) => setTheme(themes[key])
+  const onChangeTheme = (key: string) => setTheme(key)
 
   const StyledTabs = styled((props: StyledTabsProps) => (
     <Tabs
