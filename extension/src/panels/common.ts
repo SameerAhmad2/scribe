@@ -90,12 +90,12 @@ export const getWebviewContent = (webview: Webview, extensionUri: Uri) => {
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
             <meta name="theme-color" content="#000000">
             <link rel="stylesheet" type="text/css" href="${stylesUri}">
-            <script nonce="${nonce}" src="${scriptUri}"></script>
             <title>Scribe</title>
           </head>
           <body>
             <noscript>You need to enable JavaScript to run this app.</noscript>
             <div id="root"></div>
+            <script nonce="${nonce}" src="${scriptUri}"></script>
           </body>
         </html>
       `;

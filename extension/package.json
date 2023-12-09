@@ -51,6 +51,7 @@
     "install:all": "npm install && cd webview-ui && npm install",
     "start:webview": "cd webview-ui && npm run start",
     "build:webview": "cd webview-ui && npm run build",
+    "start:ext:1": "npm run build:webview && open -a Visual\\ Studio\\ Code && cliclick kd:fn kp:f5",
     "start:ext": "npm run build:webview && open -a Visual\\ Studio\\ Code\\ 2 && cliclick kd:fn kp:f5",
     "test:webview": "cd webview-ui && npm run test",
     "vscode:prepublish": "npm run compile",
