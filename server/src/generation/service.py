@@ -281,17 +281,22 @@ class OpenAIChatSession:
     @openai_error_handler
     # Create PDF metadata for code block with function explanations and other meta information.
     def generate_pdf_metadata(self, file_information: str) -> GeneratePDFSchemaOut:
-        try:
-            if self.session is None:
-                raise Exception("OpenAI session doesn't exist")
-            response = self.session.chat.completions.create(model=self.model.value,
-                                                            messages=self.generate_conversation_messages(
-                                                                user_content=f'{GENERATE_PDF_CODE_PREFIX}\n\n{file_information}',
-                                                                system_metadata=self.language))
+        limit = 3
+        count = 0
+        while count != limit:
+            count += 1
+            try:
+                if self.session is None:
+                    raise Exception("OpenAI session doesn't exist")
+                response = self.session.chat.completions.create(model=self.model.value,
+                                                                messages=self.generate_conversation_messages(
+                                                                    user_content=f'{GENERATE_PDF_CODE_PREFIX}\n\n{file_information}',
+                                                                    system_metadata=self.language))
 
-            pdf_metadata_dict = self.parse_pdf_metadata(
-                generated_content=response.choices[0].message.content)
-            return self.convert_dict_to_pydantic_model(pdf_metadata_dict)
-        except Exception:
-            raise HTTPException(
-                status_code=400, detail='Failed execution of query')
+                pdf_metadata_dict = self.parse_pdf_metadata(
+                    generated_content=response.choices[0].message.content)
+                return self.convert_dict_to_pydantic_model(pdf_metadata_dict)
+            except Exception:
+                continue
+
+        raise HTTPException(status_code=400)
